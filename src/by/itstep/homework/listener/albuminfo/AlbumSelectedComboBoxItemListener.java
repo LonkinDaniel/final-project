@@ -5,8 +5,8 @@ import java.awt.event.ItemListener;
 
 import javax.swing.Icon;
 
-import by.itstep.homework.gui.ContentPane;
-import by.itstep.homework.gui.InfoPanel;
+import by.itstep.homework.view.ContentPane;
+import by.itstep.homework.view.InfoPanel;
 
 public class AlbumSelectedComboBoxItemListener implements ItemListener {
 
@@ -24,19 +24,15 @@ public class AlbumSelectedComboBoxItemListener implements ItemListener {
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		infoPanel.showAlbumInfo(true);
-
 		albumCover = infoPanel.getSelectedAlbum().getAlbumCover();
 		albumName = infoPanel.getSelectedAlbum().getName();
 		artistName = infoPanel.getSelectedAlbum().getArtist().getName();
 		genre = infoPanel.getSelectedAlbum().getGenre().getName();
 		isLoved = infoPanel.getSelectedAlbum().getIsLoved().booleanValue();
 
-		infoPanel.albumCoverLabel.setIcon(albumCover);
-		infoPanel.albumNameTextPane.setText(albumName);
-		infoPanel.artistNameLabel.setText(artistName);
-		infoPanel.genreLabel.setText(genre);
-		infoPanel.isLovedAlbumRadioButton.setSelected(isLoved);
+		setAlbumInfo(albumCover, albumName, artistName, genre, isLoved);
+
+		infoPanel.showAlbumInfo(true);
 	}
 
 	public ContentPane getContentPane() {
@@ -45,6 +41,14 @@ public class AlbumSelectedComboBoxItemListener implements ItemListener {
 
 	public void setContentPane(ContentPane contentPane) {
 		this.contentPane = contentPane;
+	}
+
+	private void setAlbumInfo(Icon albumCover, String albumName, String artistName, String genre, Boolean isLoved) {
+		infoPanel.getAlbumCoverLabel().setIcon(albumCover);
+		infoPanel.getAlbumNameTextPane().setText(albumName);
+		infoPanel.getArtistNameLabel().setText(artistName);
+		infoPanel.getGenreLabel().setText(genre);
+		infoPanel.getIsLovedAlbumRadioButton().setSelected(isLoved);
 	}
 
 }

@@ -4,17 +4,16 @@ import javax.swing.Icon;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import by.itstep.homework.gui.AllAlbumsPanel;
-import by.itstep.homework.gui.ContentPane;
+import by.itstep.homework.view.AllAlbumsPanel;
+import by.itstep.homework.view.ContentPane;
 
 // Слушатель при выборе альбома из списка
 public class ListItemSelectListener implements ListSelectionListener {
 
 	private AllAlbumsPanel allAlbumsPanel;
 	private ContentPane contentPane;
-	private String searchedAlbumName = null;
 	private String albumName = null;
-	private String artist = null;
+	private String artistName = null;
 	private String genre = null;
 	private Icon albumCover = null;
 	private Boolean isLoved;
@@ -25,24 +24,38 @@ public class ListItemSelectListener implements ListSelectionListener {
 
 	@Override
 	public void valueChanged(ListSelectionEvent arg0) {
-		contentPane.allAlbumsPanel.showPanel(false);
-		contentPane.albumInfoPanel.showPanel(true);
+		showSelectedAlbum();
 
-		contentPane.albumInfoPanel.infoPanel.showAlbumInfo(true);
+		albumName = contentPane.getAllAlbumsPanel().getAllAlbumsList().getSelectedValue().getName();
+		artistName = contentPane.getAllAlbumsPanel().getAllAlbumsList().getSelectedValue().getArtist().getName();
+		genre = contentPane.getAllAlbumsPanel().getAllAlbumsList().getSelectedValue().getGenre().getName();
+		albumCover = contentPane.getAllAlbumsPanel().getAllAlbumsList().getSelectedValue().getAlbumCover();
+		isLoved = contentPane.getAllAlbumsPanel().getAllAlbumsList().getSelectedValue().getIsLoved();
 
-		searchedAlbumName = contentPane.allAlbumsPanel.allAlbumsList.getSelectedValue().getName();
-		albumName = contentPane.database.getAlbumByName(searchedAlbumName).getName();
-		artist = contentPane.database.getAlbumByName(albumName).getArtist().getName();
-		genre = contentPane.database.getAlbumByName(albumName).getGenre().getName();
-		albumCover = contentPane.database.getAlbumByName(albumName).getAlbumCover();
-		isLoved = contentPane.database.getAlbumByName(albumName).getIsLoved();
+		clearFields();
+		setAlbumInfo(albumCover, albumName, artistName, genre, isLoved);
+	}
 
-		contentPane.albumInfoPanel.infoPanel.albumCoverLabel.setIcon(albumCover);
-		contentPane.albumInfoPanel.infoPanel.albumNameTextPane.setText(albumName);
-		contentPane.albumInfoPanel.infoPanel.artistNameLabel.setText(artist);
-		contentPane.albumInfoPanel.infoPanel.genreLabel
-				.setText(contentPane.albumInfoPanel.infoPanel.genreLabel.getText() + " " + genre);
-		contentPane.albumInfoPanel.infoPanel.isLovedAlbumRadioButton.setSelected(isLoved);
+	private void showSelectedAlbum() {
+		contentPane.getAllAlbumsPanel().showPanel(false);
+		contentPane.getAlbumInfoPanel().showPanel(true);
+		contentPane.getAlbumInfoPanel().getInfoPanel().showAlbumInfo(true);
+	}
+
+	private void setAlbumInfo(Icon albumCover, String albumName, String artistName, String genre, Boolean isLoved) {
+		contentPane.getAlbumInfoPanel().getInfoPanel().getAlbumCoverLabel().setIcon(albumCover);
+		contentPane.getAlbumInfoPanel().getInfoPanel().getAlbumNameTextPane().setText(albumName);
+		contentPane.getAlbumInfoPanel().getInfoPanel().getArtistNameLabel().setText(artistName);
+		contentPane.getAlbumInfoPanel().getInfoPanel().getGenreLabel().setText("Жанр: " + genre);
+		contentPane.getAlbumInfoPanel().getInfoPanel().getIsLovedAlbumRadioButton().setSelected(isLoved);
+	}
+
+	private void clearFields() {
+		contentPane.getAlbumInfoPanel().getInfoPanel().getAlbumCoverLabel().setIcon(null);
+		contentPane.getAlbumInfoPanel().getInfoPanel().getAlbumNameTextPane().setText("");
+		contentPane.getAlbumInfoPanel().getInfoPanel().getArtistNameLabel().setText("");
+		contentPane.getAlbumInfoPanel().getInfoPanel().getGenreLabel().setText("Жанр: ");
+		contentPane.getAlbumInfoPanel().getInfoPanel().getIsLovedAlbumRadioButton().setSelected(false);
 	}
 
 	public ContentPane getContentPane() {

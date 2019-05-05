@@ -37,7 +37,12 @@ public class Database {
 
 	// Проверка на наличие альбома
 	public boolean isAlbumAdded(String albumName) {
-		return albums.stream().anyMatch(album -> album.getName().equalsIgnoreCase(albumName));
+		for (Album album : albums) {
+			if (album.getName().equalsIgnoreCase(albumName)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	// Проверка на наличие исполнителя
@@ -52,7 +57,12 @@ public class Database {
 
 	// Получить альбом по имени
 	public Album getAlbumByName(String albumName) {
-		return (Album) albums.stream().map(album -> album.getName().equalsIgnoreCase(albumName));
+		for (Album album : albums) {
+			if (album.getName().equalsIgnoreCase(albumName)) {
+				return album;
+			}
+		}
+		return null;
 	}
 
 	// Получить все альбомы
@@ -72,14 +82,6 @@ public class Database {
 		} else {
 			this.lovedAlbums.add(album);
 		}
-	}
-
-	public String[] getAlbumList() {
-		String[] albums = new String[this.albums.size()];
-		for (int i = 0; i < this.albums.size(); i++) {
-			albums[i] = String.format("%s", getAllAlbums()[i].getName());
-		}
-		return albums;
 	}
 
 	public List<Artist> getArtists() {

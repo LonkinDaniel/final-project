@@ -2,12 +2,9 @@ package by.itstep.homework.listener.mainbuttons;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.DefaultListModel;
 
-import by.itstep.homework.gui.ContentPane;
-import by.itstep.homework.gui.MainButtonsPanel;
-import by.itstep.homework.model.Album;
-import by.itstep.homework.model.Database;
+import by.itstep.homework.view.ContentPane;
+import by.itstep.homework.view.MainButtonsPanel;
 
 //Слушатель для кнопки отображения панели списка всех альбомов
 public class ShowAllAlbumsButtonClickListener implements ActionListener {
@@ -21,21 +18,10 @@ public class ShowAllAlbumsButtonClickListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		contentPane.albumInfoPanel.setVisible(false);
-		contentPane.allAlbumsPanel.setVisible(true);
-		contentPane.lovedAlbumsPanel.setVisible(false);
-		contentPane.addAlbumPanel.setVisible(false);
-
-		this.showAllAlbums();
-	}
-
-	private void showAllAlbums() {
-		Database database = new Database();
-		DefaultListModel<Album> listModel = new DefaultListModel<>();
-		for (int i = 0; i < database.getAllAlbums().length; i++) {
-			listModel.addElement(database.getAllAlbums()[i]);
-		}
-		contentPane.allAlbumsPanel.allAlbumsList.setModel(listModel);
+		contentPane.getAlbumInfoPanel().setVisible(false);
+		contentPane.getAllAlbumsPanel().setVisible(true);
+		contentPane.getLovedAlbumsPanel().setVisible(false);
+		contentPane.getAddAlbumPanel().setVisible(false);
 	}
 
 	public ContentPane getContentPane() {
@@ -45,5 +31,4 @@ public class ShowAllAlbumsButtonClickListener implements ActionListener {
 	public void setContentPane(ContentPane contentPane) {
 		this.contentPane = contentPane;
 	}
-
 }

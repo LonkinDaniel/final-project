@@ -1,4 +1,4 @@
-package by.itstep.homework.gui;
+package by.itstep.homework.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -15,7 +15,8 @@ import by.itstep.homework.model.Album;
 // Панель отображения избранных альбомов
 public class LovedAlbumsPanel extends Panel {
 
-	public final JList<Album> lovedAlbumsList = new JList<>(); // Список избранных альбомов
+	private JList<Album> lovedAlbumsList; // Список избранных альбомов
+	private JScrollPane scrollPane;
 
 	private static final long serialVersionUID = -7808895581304581562L;
 
@@ -38,23 +39,41 @@ public class LovedAlbumsPanel extends Panel {
 
 	@Override
 	public void build() {
-		JScrollPane scrollPane = new JScrollPane();
-		this.add(scrollPane, BorderLayout.CENTER);
+		buildLovedAlbumsList();
+		buildScrollPane();
+	}
 
+	public JList<Album> getLovedAlbumsList() {
+		return lovedAlbumsList;
+	}
+
+	public void setLovedAlbumsList(JList<Album> lovedAlbumsList) {
+		this.lovedAlbumsList = lovedAlbumsList;
+	}
+
+	private void buildLovedAlbumsList() {
+		lovedAlbumsList = new JList<>();
 		lovedAlbumsList.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		DefaultListModel<Album> listModel = new DefaultListModel<>();
-		for (int i = 0; i < contentPane.getDatabase().getAlbumList().length; i++) {
-			listModel.addElement(contentPane.getDatabase().getAllLovedAlbums()[i]);
-		}
-		lovedAlbumsList.setModel(listModel);
-		scrollPane.setViewportView(lovedAlbumsList);
+
+		createListModel();
+
 		ListItemSelectListener listItemSelectListener = new ListItemSelectListener(this);
 		listItemSelectListener.setContentPane(contentPane);
 		lovedAlbumsList.addListSelectionListener(listItemSelectListener);
 	}
 
-	public JList<Album> getLovedAlbumsList() {
-		return lovedAlbumsList;
+	private void createListModel() {
+		DefaultListModel<Album> listModel = new DefaultListModel<>();
+		for (int i = 0; i < contentPane.getDatabase().getAlbums().size(); i++) {
+			listModel.addElement(contentPane.getDatabase().getAllLovedAlbums()[i]);
+		}
+		lovedAlbumsList.setModel(listModel);
+	}
+
+	private void buildScrollPane() {
+		scrollPane = new JScrollPane();
+		this.add(scrollPane, BorderLayout.CENTER);
+		scrollPane.setViewportView(lovedAlbumsList);
 	}
 
 }

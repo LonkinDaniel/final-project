@@ -1,4 +1,4 @@
-package by.itstep.homework.gui;
+package by.itstep.homework.view;
 
 import javax.swing.JFileChooser;
 

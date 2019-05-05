@@ -5,16 +5,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import by.itstep.homework.gui.AddAlbumPanel;
-import by.itstep.homework.gui.ContentPane;
+
+import by.itstep.homework.view.AddAlbumPanel;
+import by.itstep.homework.view.ContentPane;
 
 public class AlbumCoverClickListener implements MouseListener {
 
@@ -36,10 +33,12 @@ public class AlbumCoverClickListener implements MouseListener {
 				image = ImageIO.read(file);
 			} catch (IOException exception) {
 			}
-			Image resizedImage = image.getScaledInstance(addAlbumPanel.albumCoverAddAlbumLabel.getWidth(),
-					addAlbumPanel.albumCoverAddAlbumLabel.getHeight(), Image.SCALE_SMOOTH);
-			ImageIcon imageIcon = new ImageIcon(resizedImage);
-			addAlbumPanel.albumCoverAddAlbumLabel.setIcon(imageIcon);
+
+			int labelWidth = addAlbumPanel.getAlbumCoverAddAlbumLabel().getWidth();
+			int labelHeight = addAlbumPanel.getAlbumCoverAddAlbumLabel().getHeight();
+			ImageIcon imageIcon = new ImageIcon(resizeImage(labelWidth, labelHeight, image));
+
+			addAlbumPanel.getAlbumCoverAddAlbumLabel().setIcon(imageIcon);
 
 		}
 	}
@@ -55,6 +54,11 @@ public class AlbumCoverClickListener implements MouseListener {
 	@Override
 	public void mouseEntered(MouseEvent e) {
 
+	}
+
+	private Image resizeImage(int width, int height, BufferedImage image) {
+		Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		return resizedImage;
 	}
 
 	@Override

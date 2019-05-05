@@ -1,6 +1,6 @@
 package by.itstep.homework;
 
-import by.itstep.homework.gui.GUI;
+import by.itstep.homework.view.GUI;
 
 public class Main {
 	public static void main(String[] args) {

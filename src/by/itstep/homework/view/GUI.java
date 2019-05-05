@@ -1,11 +1,11 @@
-package by.itstep.homework.gui;
+package by.itstep.homework.view;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class GUI extends JFrame {
 
-	public final ContentPane contentPane = new ContentPane();
+	public ContentPane contentPane;
 
 	private static final long serialVersionUID = 6473202730372239115L;
 
@@ -39,6 +39,7 @@ public class GUI extends JFrame {
 	}
 
 	private void buildGUI() {
+		contentPane = new ContentPane();
 		this.setContentPane(contentPane);
 	}
 }

@@ -3,8 +3,8 @@ package by.itstep.homework.listener.mainbuttons;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import by.itstep.homework.gui.ContentPane;
-import by.itstep.homework.gui.MainButtonsPanel;
+import by.itstep.homework.view.ContentPane;
+import by.itstep.homework.view.MainButtonsPanel;
 
 // Слушатель для кнопки отображения панели добавления нового альбома
 public class ShowAddAlbumPanelButtonClickListener implements ActionListener {
@@ -18,15 +18,22 @@ public class ShowAddAlbumPanelButtonClickListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		contentPane.albumInfoPanel.showPanel(false);
-		contentPane.allAlbumsPanel.showPanel(false);
-		contentPane.lovedAlbumsPanel.showPanel(false);
-		contentPane.addAlbumPanel.showPanel(true);
+		showAddAlbumPanel();
+		clearFields();
+	}
 
-		contentPane.addAlbumPanel.albumNameAddAlbumTextField.setText("");
-		contentPane.addAlbumPanel.artistNameAddAlbumTextField.setText("");
-		contentPane.addAlbumPanel.genreAddAlbumTextField.setText("");
-		contentPane.addAlbumPanel.albumCoverAddAlbumLabel.setIcon(null);
+	private void showAddAlbumPanel() {
+		contentPane.getAlbumInfoPanel().showPanel(false);
+		contentPane.getAllAlbumsPanel().showPanel(false);
+		contentPane.getLovedAlbumsPanel().showPanel(false);
+		contentPane.getAddAlbumPanel().showPanel(true);
+	}
+
+	private void clearFields() {
+		contentPane.getAddAlbumPanel().getAlbumNameAddAlbumTextField().setText("");
+		contentPane.getAddAlbumPanel().getArtistNameAddAlbumTextField().setText("");
+		contentPane.getAddAlbumPanel().getGenreAddAlbumTextField().setText("");
+		contentPane.getAddAlbumPanel().getAlbumCoverAddAlbumLabel().setIcon(null);
 	}
 
 	public ContentPane getContentPane() {

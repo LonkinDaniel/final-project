@@ -1,6 +1,6 @@
 package by.itstep.homework.exceptions;
 
-import by.itstep.homework.gui.GUI;
+import by.itstep.homework.view.GUI;
 
 // Исключение "Альбом уже добавлен"
 public class AlbumExistsException extends Exception {

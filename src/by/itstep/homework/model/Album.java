@@ -8,14 +8,13 @@ public class Album {
 	private Artist artist; // Исполнитель альбома
 	private Genre genre; // Жанр
 	private Icon albumCover; // Обложка
-	private Boolean isLoved; // Избранный или нет
+	private Boolean isLoved = false; // Избранный или нет
 
 	public Album(String name) {
 		this.name = name;
 	}
 
 	public Album(String name, Artist artist, Genre genre, Icon albumCover) {
-		super();
 		this.name = name;
 		this.artist = artist;
 		this.genre = genre;
@@ -113,8 +112,7 @@ public class Album {
 
 	@Override
 	public String toString() {
-		return "Album [name=" + name + ", artist=" + artist + ", genre=" + genre + ", albumCover=" + albumCover
-				+ ", isLoved=" + isLoved + "]";
+		return artist.getName() + " - " + name;
 	}
 
 }

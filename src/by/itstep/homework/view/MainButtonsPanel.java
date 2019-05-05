@@ -1,4 +1,4 @@
-package by.itstep.homework.gui;
+package by.itstep.homework.view;
 
 import java.awt.Color;
 
@@ -12,9 +12,9 @@ import by.itstep.homework.listener.mainbuttons.ShowLovedAlbumsButtonClickListene
 // Панель кнопок перехода по панелям
 public class MainButtonsPanel extends Panel {
 
-	public final JButton showAllAlbumsButton = new JButton("Показать все альбомы");
-	public final JButton showLovedAlbumsButton = new JButton("Избранные");
-	public final JButton addAlbumButton = new JButton("Добавить альбом");
+	private JButton showAllAlbumsButton;
+	private JButton showLovedAlbumsButton;
+	private JButton addAlbumButton;
 
 	private static final long serialVersionUID = 5603888107555761996L;
 
@@ -32,19 +32,32 @@ public class MainButtonsPanel extends Panel {
 
 	@Override
 	public void build() {
+		buildShowAllAlbumsButton();
+		buildShowLovedAlbumsButton();
+		buildAddAlbumButton();
+	}
+
+	private void buildShowAllAlbumsButton() {
+		showAllAlbumsButton = new JButton("Показать все альбомы");
 		showAllAlbumsButton.setBounds(31, 11, 158, 64);
 		ShowAllAlbumsButtonClickListener showAllAlbumsButtonClickListener = new ShowAllAlbumsButtonClickListener(this);
 		showAllAlbumsButtonClickListener.setContentPane(contentPane);
 		showAllAlbumsButton.addActionListener(showAllAlbumsButtonClickListener);
 		this.add(showAllAlbumsButton);
+	}
 
+	private void buildShowLovedAlbumsButton() {
+		showLovedAlbumsButton = new JButton("Избранные");
 		showLovedAlbumsButton.setBounds(220, 11, 158, 64);
 		ShowLovedAlbumsButtonClickListener showLovedAlbumsButtonClickListener = new ShowLovedAlbumsButtonClickListener(
 				this);
 		showLovedAlbumsButtonClickListener.setContentPane(contentPane);
 		showLovedAlbumsButton.addActionListener(showLovedAlbumsButtonClickListener);
 		this.add(showLovedAlbumsButton);
+	}
 
+	private void buildAddAlbumButton() {
+		addAlbumButton = new JButton("Добавить альбом");
 		addAlbumButton.setBounds(409, 11, 158, 64);
 		ShowAddAlbumPanelButtonClickListener showAddAlbumPanelButtonClickListener = new ShowAddAlbumPanelButtonClickListener(
 				this);

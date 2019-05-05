@@ -1,4 +1,4 @@
-package by.itstep.homework.gui;
+package by.itstep.homework.view;
 
 import javax.swing.JPanel;
 
@@ -11,4 +11,13 @@ public abstract class Panel extends JPanel {
 	public abstract void build();
 
 	public abstract void showPanel(Boolean flag);
+
+	public ContentPane getContentPane() {
+		return contentPane;
+	}
+
+	public void setContentPane(ContentPane contentPane) {
+		this.contentPane = contentPane;
+	}
+
 }

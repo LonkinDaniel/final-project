@@ -1,4 +1,4 @@
-package by.itstep.homework.gui;
+package by.itstep.homework.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -7,17 +7,14 @@ import java.awt.Font;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
-import javax.swing.ListModel;
 import javax.swing.border.LineBorder;
-import javax.swing.event.ListDataListener;
-
 import by.itstep.homework.listener.allalbums.ListItemSelectListener;
 import by.itstep.homework.model.Album;
 
 // Панель отображения всех альбомов
 public class AllAlbumsPanel extends Panel {
 
-	public final JList<Album> allAlbumsList = new JList<>(); // Список всех альбомов
+	private JList<Album> allAlbumsList; // Список всех альбомов
 
 	private static final long serialVersionUID = -7935133261706085345L;
 
@@ -44,12 +41,8 @@ public class AllAlbumsPanel extends Panel {
 		JScrollPane scrollPane = new JScrollPane();
 		this.add(scrollPane, BorderLayout.CENTER);
 
-		allAlbumsList.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		DefaultListModel<Album> listModel = new DefaultListModel<>();
-		for (int i = 0; i < contentPane.getDatabase().getAlbumList().length; i++) {
-			listModel.addElement(contentPane.getDatabase().getAllAlbums()[i]);
-		}
-		allAlbumsList.setModel(listModel);
+		buildAllAlbumList();
+
 		ListItemSelectListener listItemSelectListener = new ListItemSelectListener(this);
 		listItemSelectListener.setContentPane(contentPane);
 		allAlbumsList.addListSelectionListener(listItemSelectListener);
@@ -57,8 +50,26 @@ public class AllAlbumsPanel extends Panel {
 		scrollPane.setViewportView(allAlbumsList);
 	}
 
-	public JList<Album> getAllAlbumslist() {
+	public JList<Album> getAllAlbumsList() {
 		return allAlbumsList;
+	}
+
+	public void setAllAlbumsList(JList<Album> allAlbumsList) {
+		this.allAlbumsList = allAlbumsList;
+	}
+
+	private void buildAllAlbumList() {
+		allAlbumsList = new JList<>();
+		allAlbumsList.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		createListModel();
+	}
+
+	private void createListModel() {
+		DefaultListModel<Album> listModel = new DefaultListModel<>();
+		for (int i = 0; i < contentPane.getDatabase().getAlbums().size(); i++) {
+			listModel.addElement(contentPane.getDatabase().getAllAlbums()[i]);
+		}
+		allAlbumsList.setModel(listModel);
 	}
 
 }

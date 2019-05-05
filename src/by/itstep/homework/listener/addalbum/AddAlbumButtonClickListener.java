@@ -2,22 +2,16 @@ package by.itstep.homework.listener.addalbum;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
+import javax.swing.DefaultListModel;
 import javax.swing.Icon;
-
 import by.itstep.homework.exceptions.AlbumExistsException;
-import by.itstep.homework.gui.AddAlbumPanel;
-import by.itstep.homework.gui.ContentPane;
-import by.itstep.homework.gui.GUI;
 import by.itstep.homework.model.Album;
 import by.itstep.homework.model.Artist;
 import by.itstep.homework.model.Genre;
+import by.itstep.homework.view.AddAlbumPanel;
+import by.itstep.homework.view.ContentPane;
+import by.itstep.homework.view.GUI;
 
 // Слушатель для кнопки добавления альбома
 public class AddAlbumButtonClickListener implements ActionListener {
@@ -31,8 +25,7 @@ public class AddAlbumButtonClickListener implements ActionListener {
 	private String genreName = null;
 	private String artistName = null;
 	private Icon albumCover = null;
-	private File albumCoverImage = null;
-	private final String PIC_FOLDER_PATH = "/MusicLibrary/pic";
+	private DefaultListModel<Album> listModel = new DefaultListModel<>();
 
 	public AddAlbumButtonClickListener(AddAlbumPanel addAlbumPanel) {
 		this.addAlbumPanel = addAlbumPanel;
@@ -41,37 +34,34 @@ public class AddAlbumButtonClickListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (!addAlbumPanel.areFieldsEmpty()) {
-			albumName = addAlbumPanel.albumNameAddAlbumTextField.getText();
-			genreName = addAlbumPanel.genreAddAlbumTextField.getText();
-			artistName = addAlbumPanel.artistNameAddAlbumTextField.getText();
-			albumCover = addAlbumPanel.albumCoverAddAlbumLabel.getIcon();
+			albumName = addAlbumPanel.getAlbumNameAddAlbumTextField().getText();
+			genreName = addAlbumPanel.getGenreAddAlbumTextField().getText();
+			artistName = addAlbumPanel.getArtistNameAddAlbumTextField().getText();
+			albumCover = addAlbumPanel.getAlbumCoverAddAlbumLabel().getIcon();
 
 			artist = new Artist(artistName);
 			genre = new Genre(genreName);
 			album = new Album(albumName, artist, genre, albumCover);
 
-			try {
-				contentPane.database.addAlbum(album);
-				contentPane.database.addArtist(artist);
-				contentPane.database.addGenre(genre);
-				album.setAlbumCover(albumCover);
-
-			} catch (AlbumExistsException exception) {
-				exception.showMessage();
-			}
+			addInfoToDatabase(artist, genre, album);
 		} else {
 			GUI.showError("Заполните все поля!", "Пустые поля");
 		}
 
-		if (contentPane.database.albums.contains(album)) {
-//			try {
-//				copyFileUsingStream(albumCoverImage, PIC_FOLDER_PATH);
-//			} catch (IOException exception) {
-//				exception.printStackTrace();
-//			}
+		if (contentPane.getDatabase().isAlbumAdded(album.getName())) {
+			addItemToAlbumsComboBox(album);
+			addAlbumToAllAlbumList(album);
 			showAlbumAddedMessage();
 			addAlbumPanel.showPanel(false);
-			contentPane.albumInfoPanel.showPanel(true);
+			contentPane.getAlbumInfoPanel().showPanel(true);
+			contentPane.getAlbumInfoPanel().getInfoPanel().showAlbumInfo(false);
+		}
+	}
+
+	private void addAlbumToAllAlbumList(Album album) {
+		if (!listModel.contains(album)) {
+			listModel.addElement(album);
+			contentPane.getAllAlbumsPanel().getAllAlbumsList().setModel(listModel);
 		}
 	}
 
@@ -83,22 +73,21 @@ public class AddAlbumButtonClickListener implements ActionListener {
 		this.contentPane = contentPane;
 	}
 
-//	private void copyFileUsingStream(File sourceFile, String destination) throws IOException {
-//		InputStream inputStream = null;
-//		OutputStream outputStream = null;
-//		byte[] buffer = new byte[1024];
-//		int fileLength;
-//		try {
-//			inputStream = new FileInputStream(sourceFile);
-//			outputStream = new FileOutputStream(destination);
-//			while ((fileLength = inputStream.read(buffer)) > 0) {
-//				outputStream.write(buffer, 0, fileLength);
-//			}
-//		} finally {
-//			inputStream.close();
-//			outputStream.close();
-//		}
-//	}
+	private void addInfoToDatabase(Artist artist, Genre genre, Album album) {
+		try {
+			contentPane.database.addAlbum(album);
+			contentPane.database.addArtist(artist);
+			contentPane.database.addGenre(genre);
+			album.setAlbumCover(albumCover);
+
+		} catch (AlbumExistsException exception) {
+			exception.showMessage();
+		}
+	}
+
+	private void addItemToAlbumsComboBox(Album album) {
+		contentPane.getAlbumInfoPanel().getInfoPanel().getAlbumsComboBox().addItem(album);
+	}
 
 	private void showAlbumAddedMessage() {
 		GUI.showMessage("Альбом добавлен", "Успех");

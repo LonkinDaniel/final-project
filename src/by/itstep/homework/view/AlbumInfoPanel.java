@@ -1,4 +1,4 @@
-package by.itstep.homework.gui;
+package by.itstep.homework.view;
 
 import java.awt.Color;
 
@@ -7,8 +7,8 @@ import javax.swing.border.LineBorder;
 // Панель для отображения информации альбома и поиска альбома
 public class AlbumInfoPanel extends Panel {
 
-	public final SearchAlbumPanel searchAlbumPanel = new SearchAlbumPanel(this); // Панель поиска альбома
-	public final InfoPanel infoPanel = new InfoPanel(this); // Панель информации альбома
+	private SearchAlbumPanel searchAlbumPanel; // Панель поиска альбома
+	private InfoPanel infoPanel; // Панель информации альбома
 
 	private static final long serialVersionUID = 6263979991600619523L;
 
@@ -31,8 +31,8 @@ public class AlbumInfoPanel extends Panel {
 
 	@Override
 	public void build() {
-		this.add(searchAlbumPanel);
-		this.add(infoPanel);
+		buildSearchAlbumPanel();
+		buildInfoPanel();
 	}
 
 	public SearchAlbumPanel getSearchAlbumPanel() {
@@ -41,6 +41,24 @@ public class AlbumInfoPanel extends Panel {
 
 	public InfoPanel getInfoPanel() {
 		return infoPanel;
+	}
+
+	public void setSearchAlbumPanel(SearchAlbumPanel searchAlbumPanel) {
+		this.searchAlbumPanel = searchAlbumPanel;
+	}
+
+	public void setInfoPanel(InfoPanel infoPanel) {
+		this.infoPanel = infoPanel;
+	}
+
+	private void buildSearchAlbumPanel() {
+		searchAlbumPanel = new SearchAlbumPanel(this);
+		this.add(searchAlbumPanel);
+	}
+
+	private void buildInfoPanel() {
+		infoPanel = new InfoPanel(this);
+		this.add(infoPanel);
 	}
 
 }

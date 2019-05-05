@@ -5,11 +5,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Icon;
 
-import by.itstep.homework.gui.AlbumInfoPanel;
-import by.itstep.homework.gui.ContentPane;
-import by.itstep.homework.gui.GUI;
-import by.itstep.homework.gui.SearchAlbumPanel;
-import by.itstep.homework.model.Database;
+import by.itstep.homework.view.AlbumInfoPanel;
+import by.itstep.homework.view.ContentPane;
+import by.itstep.homework.view.GUI;
 
 // Слушатель для кнопки поиска альбома
 public class SearchAlbumButtonClickListener implements ActionListener {
@@ -18,7 +16,7 @@ public class SearchAlbumButtonClickListener implements ActionListener {
 	private ContentPane contentPane;
 	private String searchedAlbumName = null;
 	private String albumName = null;
-	private String artist = null;
+	private String artistName = null;
 	private String genre = null;
 	private Icon albumCover = null;
 	private boolean isLoved;
@@ -29,23 +27,19 @@ public class SearchAlbumButtonClickListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if (!albumInfoPanel.searchAlbumPanel.albumNameSearchTextField.getText().isEmpty()) {
-			if (contentPane.database.isAlbumAdded(albumInfoPanel.searchAlbumPanel.albumNameSearchTextField.getText())) {
-				searchedAlbumName = albumInfoPanel.searchAlbumPanel.albumNameSearchTextField.getText();
-				albumName = contentPane.database.getAlbumByName(searchedAlbumName).getName();
-				artist = contentPane.database.getAlbumByName(albumName).getArtist().getName();
-				genre = contentPane.database.getAlbumByName(albumName).getGenre().getName();
-				albumCover = contentPane.database.getAlbumByName(albumName).getAlbumCover();
-				isLoved = contentPane.database.getAlbumByName(albumName).getIsLoved();
+		searchedAlbumName = albumInfoPanel.getSearchAlbumPanel().getAlbumNameSearchTextField().getText();
 
-				contentPane.albumInfoPanel.infoPanel.albumCoverLabel.setIcon(albumCover);
-				contentPane.albumInfoPanel.infoPanel.albumNameTextPane.setText(albumName);
-				contentPane.albumInfoPanel.infoPanel.artistNameLabel.setText(artist);
-				contentPane.albumInfoPanel.infoPanel.genreLabel
-						.setText(contentPane.albumInfoPanel.infoPanel.genreLabel.getText() + " " + genre);
-				contentPane.albumInfoPanel.infoPanel.isLovedAlbumRadioButton.setSelected(isLoved);
+		if (!albumInfoPanel.getSearchAlbumPanel().isSearchFieldEmpty()) {
+			if (isAlbumFound(searchedAlbumName)) {
+				albumName = contentPane.getDatabase().getAlbumByName(searchedAlbumName).getName();
+				artistName = contentPane.getDatabase().getAlbumByName(albumName).getArtist().getName();
+				genre = contentPane.getDatabase().getAlbumByName(albumName).getGenre().getName();
+				albumCover = contentPane.getDatabase().getAlbumByName(albumName).getAlbumCover();
+				isLoved = contentPane.getDatabase().getAlbumByName(albumName).getIsLoved();
 
-				albumInfoPanel.infoPanel.showAlbumInfo(true);
+				setAlbumInfo(albumCover, albumName, artistName, genre, isLoved);
+
+				albumInfoPanel.getInfoPanel().showAlbumInfo(true);
 			} else {
 				GUI.showError("Альбом не найден.", "Ошибка");
 			}
@@ -60,6 +54,18 @@ public class SearchAlbumButtonClickListener implements ActionListener {
 
 	public void setContentPane(ContentPane contentPane) {
 		this.contentPane = contentPane;
+	}
+
+	private void setAlbumInfo(Icon albumCover, String albumName, String artistName, String genre, boolean isLoved) {
+		contentPane.albumInfoPanel.getInfoPanel().getAlbumCoverLabel().setIcon(albumCover);
+		contentPane.albumInfoPanel.getInfoPanel().getAlbumNameTextPane().setText(albumName);
+		contentPane.albumInfoPanel.getInfoPanel().getArtistNameLabel().setText(artistName);
+		contentPane.albumInfoPanel.getInfoPanel().getGenreLabel().setText("Жанр: " + genre);
+		contentPane.albumInfoPanel.getInfoPanel().getIsLovedAlbumRadioButton().setSelected(isLoved);
+	}
+
+	private boolean isAlbumFound(String albumName) {
+		return contentPane.getDatabase().isAlbumAdded(albumName);
 	}
 
 }
