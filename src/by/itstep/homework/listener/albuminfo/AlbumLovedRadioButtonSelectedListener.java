@@ -13,7 +13,7 @@ public class AlbumLovedRadioButtonSelectedListener implements ItemListener {
 
 	private InfoPanel infoPanel;
 	private ContentPane contentPane;
-	private DefaultListModel<Album> listModel = new DefaultListModel<>();
+	private DefaultListModel<Album> lovedListModel = new DefaultListModel<>();
 
 	public AlbumLovedRadioButtonSelectedListener(InfoPanel infoPanel) {
 		this.infoPanel = infoPanel;
@@ -24,15 +24,15 @@ public class AlbumLovedRadioButtonSelectedListener implements ItemListener {
 		Album album = contentPane.getDatabase().getAlbumByName(infoPanel.getAlbumNameTextPane().getText());
 		if (e.getStateChange() == ItemEvent.SELECTED) {
 			album.setIsLoved(true);
-			if (!listModel.contains(album)) {
-				listModel.addElement(album);
-				contentPane.getLovedAlbumsPanel().getLovedAlbumsList().setModel(listModel);
+			if (!lovedListModel.contains(album)) {
+				lovedListModel.addElement(album);
+				contentPane.getLovedAlbumsPanel().getLovedAlbumsList().setModel(lovedListModel);
 			}
 		} else if (e.getStateChange() == ItemEvent.DESELECTED) {
 			album.setIsLoved(false);
-			if (listModel.contains(album)) {
-				listModel.removeElement(album);
-				contentPane.getLovedAlbumsPanel().getLovedAlbumsList().setModel(listModel);
+			if (lovedListModel.contains(album)) {
+				lovedListModel.removeElement(album);
+				contentPane.getLovedAlbumsPanel().getLovedAlbumsList().setModel(lovedListModel);
 			}
 		}
 	}

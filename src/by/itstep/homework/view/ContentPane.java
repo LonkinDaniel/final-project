@@ -51,6 +51,10 @@ public class ContentPane extends JPanel {
 		return database;
 	}
 
+	public MainButtonsPanel getMainButtonsPanel() {
+		return mainButtonsPanel;
+	}
+
 	private void buildAddAlbumPanel() {
 		addAlbumPanel = new AddAlbumPanel(this);
 		this.add(addAlbumPanel);
@@ -74,10 +78,6 @@ public class ContentPane extends JPanel {
 	private void buildMainButtonPanel() {
 		mainButtonsPanel = new MainButtonsPanel(this);
 		this.add(mainButtonsPanel);
-	}
-
-	public MainButtonsPanel getMainButtonsPanel() {
-		return mainButtonsPanel;
 	}
 
 }

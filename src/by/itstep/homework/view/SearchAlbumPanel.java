@@ -40,6 +40,19 @@ public class SearchAlbumPanel extends Panel {
 		return albumNameSearchTextField.getText().isEmpty();
 	}
 
+	@Override
+	public void showPanel(Boolean flag) {
+
+	}
+
+	public JTextField getAlbumNameSearchTextField() {
+		return albumNameSearchTextField;
+	}
+
+	public void setAlbumNameSearchTextField(JTextField albumNameSearchTextField) {
+		this.albumNameSearchTextField = albumNameSearchTextField;
+	}
+
 	private void buildAlbumNameSearchLabel() {
 		JLabel albumNameSearchLabel = new JLabel("Название альбома:");
 		albumNameSearchLabel.setFont(new Font("Arial", Font.BOLD, 12));
@@ -64,18 +77,4 @@ public class SearchAlbumPanel extends Panel {
 		searchAlbumButton.addActionListener(searchAlbumButtonClickListener);
 		this.add(searchAlbumButton);
 	}
-
-	@Override
-	public void showPanel(Boolean flag) {
-
-	}
-
-	public JTextField getAlbumNameSearchTextField() {
-		return albumNameSearchTextField;
-	}
-
-	public void setAlbumNameSearchTextField(JTextField albumNameSearchTextField) {
-		this.albumNameSearchTextField = albumNameSearchTextField;
-	}
-
 }

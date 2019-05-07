@@ -27,7 +27,6 @@ public class InfoPanel extends Panel {
 	private JComboBox<Album> albumsComboBox; // Список для выбора отображения альбома
 	private JSeparator separator;
 	private DefaultComboBoxModel<Album> comboBoxModel;
-
 	private AlbumInfoPanel albumInfoPanel;
 	private static final long serialVersionUID = 4508696292131641074L;
 

@@ -24,7 +24,6 @@ public class ListItemSelectListener implements ListSelectionListener {
 
 	@Override
 	public void valueChanged(ListSelectionEvent arg0) {
-
 		showSelectedAlbum();
 
 		albumName = contentPane.getLovedAlbumsPanel().getLovedAlbumsList().getSelectedValue().getName();

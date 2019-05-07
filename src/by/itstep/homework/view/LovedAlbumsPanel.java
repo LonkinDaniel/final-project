@@ -17,7 +17,6 @@ public class LovedAlbumsPanel extends Panel {
 
 	private JList<Album> lovedAlbumsList; // Список избранных альбомов
 	private JScrollPane scrollPane;
-
 	private static final long serialVersionUID = -7808895581304581562L;
 
 	public LovedAlbumsPanel(ContentPane contentPane) {

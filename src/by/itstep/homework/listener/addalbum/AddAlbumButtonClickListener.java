@@ -58,13 +58,6 @@ public class AddAlbumButtonClickListener implements ActionListener {
 		}
 	}
 
-	private void addAlbumToAllAlbumList(Album album) {
-		if (!listModel.contains(album)) {
-			listModel.addElement(album);
-			contentPane.getAllAlbumsPanel().getAllAlbumsList().setModel(listModel);
-		}
-	}
-
 	public ContentPane getContentPane() {
 		return contentPane;
 	}
@@ -73,6 +66,15 @@ public class AddAlbumButtonClickListener implements ActionListener {
 		this.contentPane = contentPane;
 	}
 
+	// Добавление альбома в список
+	private void addAlbumToAllAlbumList(Album album) {
+		if (!listModel.contains(album)) {
+			listModel.addElement(album);
+			contentPane.getAllAlbumsPanel().getAllAlbumsList().setModel(listModel);
+		}
+	}
+
+	// Добавление данных в "базу данных"
 	private void addInfoToDatabase(Artist artist, Genre genre, Album album) {
 		try {
 			contentPane.database.addAlbum(album);
@@ -85,6 +87,7 @@ public class AddAlbumButtonClickListener implements ActionListener {
 		}
 	}
 
+	// Добавление альбома в список
 	private void addItemToAlbumsComboBox(Album album) {
 		contentPane.getAlbumInfoPanel().getInfoPanel().getAlbumsComboBox().addItem(album);
 	}

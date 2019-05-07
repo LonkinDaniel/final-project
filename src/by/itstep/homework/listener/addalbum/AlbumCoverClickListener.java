@@ -51,14 +51,15 @@ public class AlbumCoverClickListener implements MouseListener {
 		this.contentPane = contentPane;
 	}
 
-	@Override
-	public void mouseEntered(MouseEvent e) {
-
-	}
-
+	// Изменение размера выбранной картинки к размеру надписи
 	private Image resizeImage(int width, int height, BufferedImage image) {
 		Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 		return resizedImage;
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+
 	}
 
 	@Override

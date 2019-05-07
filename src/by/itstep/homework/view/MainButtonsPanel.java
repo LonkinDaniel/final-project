@@ -15,7 +15,6 @@ public class MainButtonsPanel extends Panel {
 	private JButton showAllAlbumsButton;
 	private JButton showLovedAlbumsButton;
 	private JButton addAlbumButton;
-
 	private static final long serialVersionUID = 5603888107555761996L;
 
 	public MainButtonsPanel() {
